@@ -60,7 +60,7 @@ Para mayor seguridad a la hora de transitar por los diferentes submodos se ha cr
 
 #### Modo PREPARACIÓN
 - En este estado se hace uso de la pantalla LCD, que muestra el mensaje "Preparando café..." durante un intervalo aleatorio, y del LED2, que indica el progreso de la preparación aumentando su brillo mediante modulación PWM (analogWrite) a medida que se alcanza el tiempo establecido. El brillo es proporcional al tiempo transcurrido y, para no superar el valor máximo de luminosidad (255), se ha establecido un tope.
-- Este intervalo aleatorio se selecciona por medio de random, que proporcionará un tiempo entre 4 y 8 segundos. Para evitar que se repita la misma secuencia tras cada reinicio se inicializa con una semilla leída de un pin analógico sin conectar
+- Este intervalo aleatorio se selecciona por medio de random, que proporcionará un tiempo aleatorio entre 4 y 8 segundos.
 
 Una vez cumplido esto apagamos el led, y transicionamos al siguiente estado.
 
