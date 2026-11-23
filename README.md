@@ -27,8 +27,7 @@ A continuación se señalarán los componentes usados en el circuito junto a su 
 <img width="2040" height="1144" alt="ddce9290-d88c-44d4-b6d2-08c81b31c341" src="https://github.com/user-attachments/assets/cd134ad2-3099-4e61-8915-4e3d1e17899e" />
 
 ## ESQUEMÁTICO
-
-
+<img width="1300" height="745" alt="Screenshot from 2026-11-23 20-20-01" src="https://github.com/user-attachments/assets/d976ee19-8c99-4674-99e3-329a9ea15c94" />
 
 ## ARQUITECTURA
 Como paso inicial localicé los diferentes modos y submodos contenidos en el ejercicio, los cuales declaré por medio de enums para cada una de los diferentes modos principales.
