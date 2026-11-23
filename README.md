@@ -11,10 +11,6 @@ A continuación se señalarán los componentes usados en el circuito junto a su 
 
 ## MONTAJE DEL CIRCUITO
 
-<img width="2040" height="1144" alt="WhatsApp Image 2026-11-23 at 17 59 20" src="https://github.com/user-attachments/assets/74d2f7e9-f84e-49f5-ac74-395782329328" />
-
-<img width="2040" height="1144" alt="ddce9290-d88c-44d4-b6d2-08c81b31c341" src="https://github.com/user-attachments/assets/cd134ad2-3099-4e61-8915-4e3d1e17899e" />
-
 ### ⚙️ Componentes hardware:
 - Arduino UNO.
 - Pantalla LCD.
@@ -26,9 +22,13 @@ A continuación se señalarán los componentes usados en el circuito junto a su 
 - Potenciometro.
 
 ### 📷Circuito:
+<img width="2040" height="1144" alt="WhatsApp Image 2026-11-23 at 17 59 20" src="https://github.com/user-attachments/assets/74d2f7e9-f84e-49f5-ac74-395782329328" />
 
+<img width="2040" height="1144" alt="ddce9290-d88c-44d4-b6d2-08c81b31c341" src="https://github.com/user-attachments/assets/cd134ad2-3099-4e61-8915-4e3d1e17899e" />
 
 ## ESQUEMÁTICO
+
+
 
 ## ARQUITECTURA
 Como paso inicial localicé los diferentes modos y submodos contenidos en el ejercicio, los cuales declaré por medio de enums para cada una de los diferentes modos principales.
@@ -96,7 +96,7 @@ Este modo, al igual que el de Catálogo nos permite recorrer una lista de opcion
 
 ### 🔧 WATCHDOG
 Para garantizar que el sistema se recupere ante un bloqueo inesperado se ha configurado el temporizador Watchdog del microcontrolador mediante la librería avr/wdt.h. Se activa una sola vez en setup() con wdt_enable(WDTO_2S) y se refresca con wdt_reset() en cada iteración de loop(). El tiempo se eligió a partir de lo más largo que puede bloquear una vuelta del bucle principal: la medida de distancia, que al no usar un timeout propio en pulseIn puede esperar hasta 1 segundo cuando no llega eco, más la lectura del sensor DHT11. Dos segundos dejan un margen amplio sobre ese peor caso y evitan reinicios falsos. 
-Si el programa dejara de ejecutar el bucle y no llegara a refrescarlo, la placa se reiniciaría y volvería al modo Arranque, con lo que los precios modificados en el modo Administración recuperan sus valores iniciales, ya que no se guardan en EEPROM. Para comprobarlo se provocó un bloqueo deliberado y se verificó que el sistema se reiniciaba.
+Si el programa dejara de ejecutar el bucle y no llegara a refrescarlo, la placa se reiniciaría y volvería al modo Arranque, con lo que los precios modificados en el modo Administración recuperan sus valores iniciales, ya que no se guardan en EEPROM.
 
 ### THREADS
 Para evitar el uso de delay(), que bloquearía el programa e impediría atender el joystick o el botón externo mientras se espera, se ha hecho uso de la librería ArduinoThread junto a un ThreadController, que en cada iteración del loop() comprueba qué threads deben ejecutarse. Se han utilizado tres: 
@@ -108,6 +108,7 @@ De esta forma el sistema sigue respondiendo mientras espera.
  ### Interrupciones
  El botón externo se gestiona mediante una interrupción hardware en el pin 2, configurada en modo CHANGE para detectar tanto la pulsación como la liberación. De esta forma se mide con precisión la duración de cada pulsación sin necesidad de consultar el botón continuamente.
 La rutina de interrupción (ISR) es lo más corta posible. Incorpora un antirrebote de 30 ms, guarda el instante en que se pulsa y, al soltar, calcula y guarda la duración, activando un indicador.
+
 ## PROBLEMAS ENCONTRADOS
 - El principal problema detectado fue la correcta distribución de los componentes en el circuito, ya que debido a las dimensiones de algunos de ellos, como es el caso de la pantalla LCD, fue complejo disponerlos de tal manera que se pudiesen acceder a todos los componentes con los que había que interactuar visualmente o físicamente. Este problema también se debe a la falta de cables largos y la abundancia de cables cortos que causan una distribución muy pegada entre los componentes.
 - La navegación con el joystick inicialmente supuso un reto, ya que inicialmente no tenía en cuenta movimientos anteriores y eso causaba problemas en la escritura del LCD y problemas para navegar correctamente por los menús.
@@ -115,9 +116,11 @@ La rutina de interrupción (ISR) es lo más corta posible. Incorpora un antirreb
   
 ## VIDEOS
 
+- En este video vemos la ejecución del modo arranque y el modo servicio:
+https://youtu.be/fL4N55OI4As
 
-
-
+- En este vídeo vemos la ejecución de las interrupciones y el modo administrador:
+https://youtu.be/xiiXkc5TtTk
 
 
 
