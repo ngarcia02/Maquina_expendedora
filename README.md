@@ -11,6 +11,10 @@ A continuación se señalarán los componentes usados en el circuito junto a su 
 
 ## MONTAJE DEL CIRCUITO
 
+<img width="2040" height="1144" alt="WhatsApp Image 2026-11-23 at 17 59 20" src="https://github.com/user-attachments/assets/74d2f7e9-f84e-49f5-ac74-395782329328" />
+
+<img width="2040" height="1144" alt="ddce9290-d88c-44d4-b6d2-08c81b31c341" src="https://github.com/user-attachments/assets/cd134ad2-3099-4e61-8915-4e3d1e17899e" />
+
 ### ⚙️ Componentes hardware:
 - Arduino UNO.
 - Pantalla LCD.
@@ -110,6 +114,12 @@ La rutina de interrupción (ISR) es lo más corta posible. Incorpora un antirreb
 - El contraste del LCD supuso un problema para la visualización, pero se arregló al introducir al circuito un potenciómetro que permite ajustar el contraste en cualquier momento.
   
 ## VIDEOS
+
+
+
+
+
+
 
 
 
