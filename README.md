@@ -19,18 +19,20 @@ A continuación se señalarán los componentes usados en el circuito junto a su 
 - Sensor de Distancia por Ultrasonidos.
 - Pulsador / Botón externo.
 - 2 LEDs estándar: LED1 y LED2.
-- Potenciometro.
+- Potenciómetro.
 
 ### 📷Circuito:
-<img width="2040" height="1144" alt="WhatsApp Image 2026-11-23 at 17 59 20" src="https://github.com/user-attachments/assets/74d2f7e9-f84e-49f5-ac74-395782329328" />
+<img src="https://github.com/user-attachments/assets/74d2f7e9-f84e-49f5-ac74-395782329328" width="75%" />
 
-<img width="2040" height="1144" alt="ddce9290-d88c-44d4-b6d2-08c81b31c341" src="https://github.com/user-attachments/assets/cd134ad2-3099-4e61-8915-4e3d1e17899e" />
+<img src="https://github.com/user-attachments/assets/cd134ad2-3099-4e61-8915-4e3d1e17899e" width="75%" />
+
+<div style="page-break-before: always;"></div>
 
 ## ESQUEMÁTICO
-<img width="1300" height="745" alt="Screenshot from 2026-11-23 20-20-01" src="https://github.com/user-attachments/assets/d976ee19-8c99-4674-99e3-329a9ea15c94" />
+<img src="https://github.com/user-attachments/assets/d976ee19-8c99-4674-99e3-329a9ea15c94" width="75%" />
 
 ## ARQUITECTURA
-Como paso inicial localicé los diferentes modos y submodos contenidos en el ejercicio, los cuales declaré por medio de enums para cada una de los diferentes modos principales.
+Como paso inicial localicé los diferentes modos y submodos contenidos en el ejercicio, los cuales declaré por medio de enums para cada uno diferentes modos principales.
 
 ### 🟢 MODO ARRANQUE
 En este modo inicial no tenemos ningún derivado, su única función es mostrar el arranque del sistema por medio de los dispositivos hardware, concretamente la pantalla LCD y el LED1.
@@ -43,12 +45,12 @@ Una vez concluida esta ejecución se procede al apagado del LED1 y al paso al se
 ### 🟡 MODO SERVICIO
 En este segundo modo disponemos de un total de cinco estados: ESPERA, ENTORNO, CATÁLOGO, PREPARACIÓN y RETIRAR. Tres de ellos (ENTORNO, PREPARACIÓN y RETIRAR) tienen una duración y son controlados por un thread (thread_temporizador), encargado de gestionar el intervalo de cada uno. ESPERA depende de la distancia medida y CATÁLOGO de la interacción con el joystick.
 
-Para mayor seguridad a la hora de transitar por los diferentes submodos se ha creado una función encargada de gestionar la limpieza y inicialización  de cada uno de estos subestados, garantizando la limpieza de la pantalla lcd, sin caer en parpadeos en la pantalla, y la actualización de variables como es el caso del indice del catálogo, permitiendo de esa forma acceder a la lista de productos siempre desde el producto inicial.
+Para mayor seguridad a la hora de transitar por los diferentes submodos se ha creado una función encargada de gestionar la limpieza e inicialización  de cada uno de estos subestados, garantizando la limpieza de la pantalla LCD, sin caer en parpadeos en la pantalla, y la actualización de variables como es el caso del índice del catálogo, permitiendo de esa forma acceder a la lista de productos siempre desde el producto inicial.
 
 #### Modo ESPERA
 - En este subestado inicial realizamos la lectura de la distancia por medio del ultrasonidos, derivando en dos casos
   ##### CLIENTE DETECTADO
-  - Al medir una distancia menor a 1 metro realizamos el cambio de estado a el modo Entorno.
+  - Al medir una distancia menor a 1 metro realizamos el cambio de estado al modo Entorno.
   - La medida no se realiza de forma continua, sino desde un thread (thread_distancia) que mide cada 150 ms. Así se evita encadenar medidas sin pausa entre ellas, que dan lecturas erróneas, y se consigue un valor más estable, que además permite una mejor visualización en el modo Administración.
   ##### CLIENTE NO DETECTADO
   - En caso de que no se haya detectado ninguna medición menor a un metro permanecemos a la espera y mostramos por la pantalla LCD el mensaje "ESPERANDO CLIENTE".
@@ -56,9 +58,9 @@ Para mayor seguridad a la hora de transitar por los diferentes submodos se ha cr
 #### Modo ENTORNO
 - Una vez hemos detectado un cliente mostramos por pantalla durante un intervalo de 5 segundos la temperatura y humedad detectada por el sensor DHT11, comprobando antes que ninguna lectura haya fallado. Posteriormente transicionamos al subestado Catálogo donde mostraremos el menú de productos disponibles junto a sus precios.
   
-#### Modo CATALOGO
-- En este modo realizamos la navegación y selección en el catálogo, para ello hacemos uso de el joystick, del cual leemos su valor para su pin del eje y, y por medio de el establecemos el movimiento realizado y transicionamos el producto mostrado del catálogo. Para evitar una navegación imprecisa guardamos los movimientos anteriores , de forma que evitamos transicionar muy rápido y realizar un borrado de pantalla innecesario.
-- Para un mejor entendimiento guardé la primera fila de la pantalla LCD para el encabezado de la lista, indicando que el primer termino será el producto y el segundo su precio base. La segunda fila de la pantalla es la encargada de mostrar los productos y de reescribirse cuando se navegue con el joystick.
+#### Modo CATÁLOGO
+- En este modo realizamos la navegación y selección en el catálogo, para ello hacemos uso del joystick, del cual leemos su valor para su pin del eje y, y por medio de el establecemos el movimiento realizado y transicionamos el producto mostrado del catálogo. Para evitar una navegación imprecisa guardamos los movimientos anteriores , de forma que evitamos transicionar muy rápido y realizar un borrado de pantalla innecesario.
+- Para un mejor entendimiento guardé la primera fila de la pantalla LCD para el encabezado de la lista, indicando que el primer término será el producto y el segundo su precio base. La segunda fila de la pantalla es la encargada de mostrar los productos y de reescribirse cuando se navegue con el joystick.
 - Para cambiar al siguiente estado se debe seleccionar el producto con el pulsador del joystick. También se detecta como un flanco, para que una sola pulsación equivalga a una sola selección. A continuación se pasa al estado PREPARACIÓN.
 
 #### Modo PREPARACIÓN
@@ -88,7 +90,7 @@ Este modo, al igual que el de Catálogo nos permite recorrer una lista de opcion
 - Mostramos el tiempo transcurrido desde el arranque de la placa. Para ello se actualiza el tiempo al inicio de cada iteración de loop() y el cálculo en segundos se realiza en este estado.
   
 #### Modo PRECIOS
-- Mostramos nuevamente el catálogo de productos, pero esta vez al seleccionar permitimos modificar el precio aumentando y disminuyendo el precio de cinco centimos en cinco céntimos en función de si el joystick se ha movido hacia arriba o hacia abajo, y fijar por medio nuevamente del pulsador del mismo. Además, permitimos descartar selecciones moviendo el joystick hacia la izquierda.
+- Mostramos nuevamente el catálogo de productos, pero esta vez al seleccionar permitimos modificar el precio aumentando y disminuyendo el precio de cinco céntimos en cinco céntimos en función de si el joystick se ha movido hacia arriba o hacia abajo, y fijar por medio nuevamente del pulsador del mismo. Además, permitimos descartar selecciones moviendo el joystick hacia la izquierda.
 - Como consecuencia de esta sección se modificó el array con los precios estableciéndolos en céntimos, y realizando su transición a euros por medio de una función aparte.
 
 ## RECURSOS DE TIEMPO REAL
@@ -113,9 +115,9 @@ La rutina de interrupción (ISR) es lo más corta posible. Incorpora un antirreb
 - La navegación con el joystick inicialmente supuso un reto, ya que inicialmente no tenía en cuenta movimientos anteriores y eso causaba problemas en la escritura del LCD y problemas para navegar correctamente por los menús.
 - El contraste del LCD supuso un problema para la visualización, pero se arregló al introducir al circuito un potenciómetro que permite ajustar el contraste en cualquier momento.
   
-## VIDEOS
+## VÍDEOS
 
-- En este video vemos la ejecución del modo arranque y el modo servicio:
+- En este vídeo vemos la ejecución del modo arranque y el modo servicio:
 https://youtu.be/fL4N55OI4As
 
 - En este vídeo vemos la ejecución de las interrupciones y el modo administrador:
